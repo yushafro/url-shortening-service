@@ -15,5 +15,5 @@ func CutUrl(url string) string {
 
 	Urls[id] = url
 
-	return fmt.Sprintf("http://%s/%s\n", env.GetAddr(), id)
+	return fmt.Sprintf("http://%s/%s", env.GetAddr(), id)
 }
