@@ -5,5 +5,5 @@ const (
 	Location = "Location"
 
 	Plain = "text/plain"
-	Json  = "application/json"
+	JSON  = "application/json"
 )

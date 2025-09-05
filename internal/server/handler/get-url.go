@@ -13,7 +13,7 @@ func GetURLHandler(w http.ResponseWriter, r *http.Request) {
 	originURL := service.Urls[id]
 
 	if originURL == "" {
-		err := fmt.Sprintf(NoSuchItemById, originURL, id)
+		err := fmt.Sprintf(NoSuchItemByID, originURL, id)
 		http.Error(w, err, http.StatusBadRequest)
 
 		return
