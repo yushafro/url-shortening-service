@@ -10,8 +10,8 @@ import (
 
 var Urls = make(model.Urls)
 
-func CutUrl(url string) string {
-	id := id.RandomId(8)
+func CutURL(url string) string {
+	id := id.RandomID(8)
 
 	Urls[id] = url
 

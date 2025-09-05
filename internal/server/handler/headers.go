@@ -1,9 +1,9 @@
 package handler
 
 const (
-	CONTENT  = "Content-Type"
-	LOCATION = "Location"
+	Content  = "Content-Type"
+	Location = "Location"
 
-	PLAIN = "text/plain"
-	JSON  = "application/json"
+	Plain = "text/plain"
+	Json  = "application/json"
 )

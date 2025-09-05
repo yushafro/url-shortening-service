@@ -2,12 +2,12 @@ package id
 
 import "crypto/rand"
 
-func RandomId(length uint8) string {
+func RandomID(length uint8) string {
 	id := make([]byte, length)
 
 	rand.Read(id)
 	for i := range length {
-		id[i] = CHARSET[int(id[i])%len(CHARSET)]
+		id[i] = Charset[int(id[i])%len(Charset)]
 	}
 
 	return string(id)

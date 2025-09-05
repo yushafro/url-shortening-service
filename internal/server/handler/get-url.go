@@ -7,18 +7,18 @@ import (
 	"github.com/yushafro/url-shortening-service/internal/service"
 )
 
-func GetUrlHandler(w http.ResponseWriter, r *http.Request) {
+func GetURLHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
 
-	originUrl := service.Urls[id]
+	originURL := service.Urls[id]
 
-	if originUrl == "" {
-		err := fmt.Sprintf(NO_SUCH_ITEM_BY_ID, originUrl, id)
+	if originURL == "" {
+		err := fmt.Sprintf(NoSuchItemById, originURL, id)
 		http.Error(w, err, http.StatusBadRequest)
 
 		return
 	}
 
-	w.Header().Add(LOCATION, originUrl)
+	w.Header().Add(Location, originURL)
 	w.WriteHeader(http.StatusTemporaryRedirect)
 }

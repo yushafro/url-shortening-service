@@ -10,8 +10,8 @@ import (
 func InitServer() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /{id}", handler.GetUrlHandler)
-	mux.HandleFunc("POST /", handler.CutUrlHandler)
+	mux.HandleFunc("GET /{id}", handler.GetURLHandler)
+	mux.HandleFunc("POST /", handler.CutURLHandler)
 
 	err := http.ListenAndServe(env.GetAddr(), mux)
 	if err != nil {

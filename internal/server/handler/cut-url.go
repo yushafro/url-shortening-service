@@ -8,7 +8,7 @@ import (
 	"github.com/yushafro/url-shortening-service/internal/service"
 )
 
-func CutUrlHandler(w http.ResponseWriter, r *http.Request) {
+func CutURLHandler(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 
 	if err != nil {
@@ -16,13 +16,13 @@ func CutUrlHandler(w http.ResponseWriter, r *http.Request) {
 
 		return
 	} else if len(body) == 0 {
-		err := fmt.Sprintf(REQUIRED, "URL")
+		err := fmt.Sprintf(Required, "URL")
 		http.Error(w, err, http.StatusBadRequest)
 
 		return
 	}
 
-	urlId := service.CutUrl(string(body))
+	urlID := service.CutURL(string(body))
 	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte(urlId))
+	w.Write([]byte(urlID))
 }
