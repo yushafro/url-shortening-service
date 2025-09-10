@@ -57,6 +57,8 @@ func checkValidID(ts testServer, id string) {
 	res, err := ts.server.Client().Do(req)
 
 	require.NoError(ts.t, err)
+	defer res.Body.Close()
+
 	require.Equal(ts.t, ts.test.Want.StatusCode, res.StatusCode)
 }
 
@@ -65,5 +67,7 @@ func checkInvalidID(ts testServer) {
 	res, err := ts.server.Client().Do(req)
 
 	require.NoError(ts.t, err)
+	defer res.Body.Close()
+
 	require.Equal(ts.t, http.StatusBadRequest, res.StatusCode)
 }

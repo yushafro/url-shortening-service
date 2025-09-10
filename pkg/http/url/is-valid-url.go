@@ -2,7 +2,7 @@ package url
 
 import "net/url"
 
-func IsValidUrl(s string) bool {
+func IsValidURL(s string) bool {
 	u, err := url.Parse(s)
 	if err != nil {
 		return false

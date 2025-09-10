@@ -41,7 +41,7 @@ func TestCutUrl(t *testing.T) {
 			},
 			Want: want{
 				StatusCode: http.StatusBadRequest,
-				Response:   RequiredURLError.Error() + "\n",
+				Response:   ErrRequiredURL.Error() + "\n",
 			},
 			WantError: true,
 		},
@@ -54,7 +54,7 @@ func TestCutUrl(t *testing.T) {
 			},
 			Want: want{
 				StatusCode: http.StatusBadRequest,
-				Response:   service.InvalidURLError.Error() + "\n",
+				Response:   service.ErrInvalidURL.Error() + "\n",
 			},
 			WantError: true,
 		},

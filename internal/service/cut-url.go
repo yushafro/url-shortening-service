@@ -11,11 +11,11 @@ import (
 )
 
 var URLs = make(model.Urls)
-var InvalidURLError = fmt.Errorf(http.Invalid, "URL")
+var ErrInvalidURL = fmt.Errorf(http.Invalid, "URL")
 
 func CutURL(s string) (string, error) {
-	if !url.IsValidUrl(s) {
-		return "", InvalidURLError
+	if !url.IsValidURL(s) {
+		return "", ErrInvalidURL
 	}
 
 	id, _ := id.RandomID(8)

@@ -11,7 +11,7 @@ import (
 
 const CutURLPattern = "POST /"
 
-var RequiredURLError = fmt.Errorf(pkgHttp.Required, "URL")
+var ErrRequiredURL = fmt.Errorf(pkgHttp.Required, "URL")
 
 func CutURLHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -28,7 +28,7 @@ func CutURLHandler(w http.ResponseWriter, r *http.Request) {
 
 		return
 	} else if len(body) == 0 {
-		http.Error(w, RequiredURLError.Error(), http.StatusBadRequest)
+		http.Error(w, ErrRequiredURL.Error(), http.StatusBadRequest)
 
 		return
 	}

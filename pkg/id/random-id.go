@@ -6,12 +6,12 @@ import (
 )
 
 var (
-	emptyIDError = errors.New("length must be > 0")
+	errEmptyID = errors.New("length must be > 0")
 )
 
 func RandomID(length uint8) (string, error) {
 	if length == 0 {
-		return "", emptyIDError
+		return "", errEmptyID
 	}
 	id := make([]byte, length)
 
