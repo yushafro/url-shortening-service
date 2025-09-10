@@ -5,15 +5,21 @@ import (
 
 	"github.com/yushafro/url-shortening-service/internal/config/env"
 	"github.com/yushafro/url-shortening-service/internal/model"
-	"github.com/yushafro/url-shortening-service/internal/service/id"
+	"github.com/yushafro/url-shortening-service/pkg/http"
+	"github.com/yushafro/url-shortening-service/pkg/http/url"
+	"github.com/yushafro/url-shortening-service/pkg/id"
 )
 
-var Urls = make(model.Urls)
+var URLs = make(model.Urls)
+var ErrInvalidURL = fmt.Errorf(http.Invalid, "URL")
 
-func CutURL(url string) string {
-	id := id.RandomID(8)
+func CutURL(s string) (string, error) {
+	if !url.IsValidURL(s) {
+		return "", ErrInvalidURL
+	}
 
-	Urls[id] = url
+	id, _ := id.RandomID(8)
+	URLs[id] = s
 
-	return fmt.Sprintf("http://%s/%s", env.GetAddr(), id)
+	return env.URL() + "/" + id, nil
 }

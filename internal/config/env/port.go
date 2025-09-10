@@ -6,18 +6,13 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func GetAddr() string {
+func Port() string {
 	godotenv.Load()
-
-	host := os.Getenv("HOST")
-	if host == "" {
-		host = "localhost"
-	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 
-	return host + ":" + port
+	return port
 }
