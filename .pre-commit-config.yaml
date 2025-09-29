@@ -1,0 +1,224 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        name: check for added large files
+        description: prevents giant files from being committed.
+        entry: check-added-large-files
+        language: python
+        stages: [pre-commit, pre-push, manual]
+        minimum_pre_commit_version: 3.2.0
+      - id: double-quote-string-fixer
+        name: fix double quoted strings
+        description: replaces double quoted strings with single quoted strings.
+        entry: double-quote-string-fixer
+        language: python
+        types: [python]
+      - id: check-json
+        name: check json
+        description: checks json files for parseable syntax.
+        entry: check-json
+        language: python
+        types: [json]
+      - id: check-merge-conflict
+        name: check for merge conflicts
+        description: checks for files that contain merge conflict strings.
+        entry: check-merge-conflict
+        language: python
+        types: [text]
+      - id: check-toml
+        name: check toml
+        description: checks toml files for parseable syntax.
+        entry: check-toml
+        language: python
+        types: [toml]
+      - id: check-yaml
+        name: check yaml
+        description: checks yaml files for parseable syntax.
+        entry: check-yaml
+        language: python
+        types: [yaml]
+      - id: detect-private-key
+        name: detect private key
+        description: detects the presence of private keys.
+        entry: detect-private-key
+        language: python
+        types: [text]
+      - id: end-of-file-fixer
+        name: fix end of files
+        description: ensures that a file is either empty, or ends with one newline.
+        entry: end-of-file-fixer
+        language: python
+        types: [text]
+        stages: [pre-commit, pre-push, manual]
+        minimum_pre_commit_version: 3.2.0
+      - id: pretty-format-json
+        name: pretty format json
+        description: sets a standard for formatting json files.
+        entry: pretty-format-json
+        language: python
+        types: [json]
+        args: [--autofix]
+      - id: trailing-whitespace
+        name: trim trailing whitespace
+        description: trims trailing whitespace.
+        entry: trailing-whitespace-fixer
+        language: python
+        types: [text]
+        stages: [pre-commit, pre-push, manual]
+        minimum_pre_commit_version: 3.2.0
+  # golang
+  - repo: https://github.com/tekwizely/pre-commit-golang
+    rev: v1.0.0-rc.2
+    hooks:
+      - id: go-build-mod
+        name: "go-build-mod"
+        entry: go-build-mod.sh
+        files: '(\.go$)|(\bgo\.mod$)'
+        exclude: "(^|/)vendor/"
+        language: "script"
+        description: "Run 'cd $(mod_root $FILE); go build -o /dev/null [$ARGS] ./...' for each staged .go file"
+        pass_filenames: true
+        require_serial: true
+      - id: go-mod-tidy
+        name: "go-mod-tidy"
+        entry: go-mod-tidy.sh
+        files: '(\.go$)|(\bgo\.mod$)'
+        exclude: "(^|/)vendor/"
+        language: "script"
+        description: "Run 'cd $(mod_root $FILE); go mod tidy [$ARGS]' for each staged .go file"
+        pass_filenames: true
+        require_serial: true
+      - id: go-test-mod
+        name: "go-test-mod"
+        entry: go-test-mod.sh
+        files: '(\.go$)|(\bgo\.mod$)'
+        exclude: "(^|/)vendor/"
+        language: "script"
+        description: "Run 'cd $(mod_root $FILE); go test [$ARGS] ./...' for each staged .go file"
+        pass_filenames: true
+        require_serial: true
+      - id: go-vet-mod
+        name: "go-vet-mod"
+        entry: go-vet-mod.sh
+        files: '(\.go$)|(\bgo\.mod$)'
+        exclude: "(^|/)vendor/"
+        language: "script"
+        description: "Run 'cd $(mod_root $FILE); go vet [$ARGS] ./...' for each staged .go file"
+        pass_filenames: true
+        require_serial: true
+      - id: golangci-lint-mod
+        name: "golangci-lint-mod"
+        entry: golangci-lint-mod.sh
+        files: '(\.go$)|(\bgo\.mod$)'
+        exclude: "(^|/)vendor/"
+        language: "script"
+        description: "Run 'cd $(mod_root $FILE); golangci-lint run [$ARGS] ./...' for each staged .go file"
+        pass_filenames: true
+        require_serial: true
+  # commit validation
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.9.1
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages: [pre-push]
+  # secrets
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.28.0
+    hooks:
+      - id: gitleaks
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.7
+    hooks:
+      - id: actionlint
+  - repo: https://github.com/mpalmer/action-validator
+    rev: v0.8.0
+    hooks:
+      - id: action-validator
+  # Protocol Buffers
+  - repo: https://github.com/bufbuild/buf
+    rev: v1.57.2
+    hooks:
+      - id: buf-generate
+        name: buf generate
+        language: golang
+        language_version: 1.24.0
+        entry: buf generate
+        types: [proto]
+        pass_filenames: false
+      - id: buf-breaking
+        name: buf breaking
+        language: golang
+        language_version: 1.24.0
+        entry: buf breaking
+        types: [proto]
+        pass_filenames: false
+      - id: buf-lint
+        name: buf lint
+        language: golang
+        language_version: 1.24.0
+        entry: buf lint
+        types: [proto]
+        pass_filenames: false
+      - id: buf-format
+        name: buf format
+        language: golang
+        language_version: 1.24.0
+        entry: buf format -w --exit-code
+        types: [proto]
+        pass_filenames: false
+      - id: buf-dep-update
+        name: buf dep update
+        language: golang
+        language_version: 1.24.0
+        entry: buf dep update
+        files: '(buf\.lock|buf\.yaml)'
+        pass_filenames: false
+      - id: buf-dep-prune
+        name: buf dep prune
+        language: golang
+        language_version: 1.24.0
+        entry: buf dep prune
+        files: '(buf\.lock|buf\.yaml)'
+        pass_filenames: false
+  # SQL
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 3.4.2
+    hooks:
+      - id: sqlfluff-lint
+        name: sqlfluff-lint
+        entry: sqlfluff lint --processes 0 --disable-progress-bar
+        language: python
+        description: "Lints sql files with `SQLFluff`"
+        types: [sql]
+        require_serial: true
+        additional_dependencies: []
+      - id: sqlfluff-fix
+        name: sqlfluff-fix
+        entry: sqlfluff fix --show-lint-violations --processes 0 --disable-progress-bar
+        language: python
+        description: "Fixes sql lint errors with `SQLFluff`"
+        types: [sql]
+        require_serial: true
+        additional_dependencies: []
+    # JSON
+  - repo: https://github.com/google/go-jsonnet
+    rev: v0.21.0
+    hooks:
+      - id: jsonnet-format
+        name: jsonnetfmt
+        description: Automatically format jsonnet files.
+        entry: jsonnetfmt
+        args: [-i]
+        language: golang
+        files: \.(jsonnet|libsonnet)$
+        minimum_pre_commit_version: 2.10.1
+      - id: jsonnet-lint
+        name: jsonnet-lint
+        description: Lint jsonnet files.
+        entry: jsonnet-lint
+        language: golang
+        files: \.(jsonnet|libsonnet)$
+        minimum_pre_commit_version: 2.10.1

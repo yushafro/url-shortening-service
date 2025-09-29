@@ -5,20 +5,22 @@ import (
 	"errors"
 )
 
-var (
-	errEmptyID = errors.New("length must be > 0")
-)
+var ErrEmptyID = errors.New("length must be > 0")
 
 func RandomID(length uint8) (string, error) {
 	if length == 0 {
-		return "", errEmptyID
+		return "", ErrEmptyID
 	}
-	id := make([]byte, length)
+	urlID := make([]byte, length)
 
-	rand.Read(id)
+	_, err := rand.Read(urlID)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	for i := range length {
-		id[i] = Charset[int(id[i])%len(Charset)]
+		urlID[i] = Charset[int(urlID[i])%len(Charset)]
 	}
 
-	return string(id), nil
+	return string(urlID), nil
 }

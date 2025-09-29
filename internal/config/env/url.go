@@ -2,12 +2,19 @@ package env
 
 import (
 	"fmt"
+	"os"
 )
 
 func URL() string {
-	protocol := Protocol()
-	host := Host()
-	port := Port()
+	url := os.Getenv("URL")
 
-	return fmt.Sprintf("%s://%s:%s", protocol, host, port)
+	if url == "" {
+		protocol := Scheme()
+		host := Host()
+		port := Port()
+
+		return fmt.Sprintf("%s://%s:%s", protocol, host, port)
+	}
+
+	return url
 }

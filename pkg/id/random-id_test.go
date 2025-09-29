@@ -1,13 +1,16 @@
-package id
+package id_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+	"github.com/yushafro/url-shortening-service/pkg/id"
 	"github.com/yushafro/url-shortening-service/pkg/test"
 )
 
 func TestRandomID(t *testing.T) {
+	t.Parallel()
+
 	tests := []test.Test[uint8, int]{
 		{
 			Name: "small ID",
@@ -20,24 +23,26 @@ func TestRandomID(t *testing.T) {
 			Want: 200,
 		},
 		{
-			Name:      "empty length",
-			Args:      0,
-			WantError: true,
+			Name:  "empty length",
+			Args:  0,
+			Error: id.ErrEmptyID,
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.Name, func(t *testing.T) {
-			id, err := RandomID(tt.Args)
+	for _, test := range tests {
+		t.Run(test.Name, func(t *testing.T) {
+			t.Parallel()
 
-			if tt.WantError {
-				require.Error(t, err)
+			randomID, err := id.RandomID(test.Args)
+
+			if test.Error != nil {
+				require.EqualError(t, err, test.Error.Error())
 
 				return
 			}
 
-			require.Equal(t, tt.Want, len(id))
 			require.NoError(t, err)
+			require.Len(t, randomID, test.Want)
 		})
 	}
 }
