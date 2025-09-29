@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,8 @@ const (
 )
 
 func InitServer() {
+	gin.SetMode(os.Getenv(gin.EnvGinMode))
+
 	router := gin.Default()
 	router.GET(url.GetURLPattern, url.GetURLHandler)
 	router.POST(url.CutURLPattern, url.CutURLHandler)
